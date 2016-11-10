@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id="cv"></canvas>
+
+	<script type="text/javascript">
+		var cv = document.getElementById('cv');
+		cv.style.border = "1px solid red";
+		cv.width = 600;
+		cv.height = 400;
+
+		var ctx = cv.getContext("2d");
+		
+		// 弧度转化为角度
+		var toAngle = function(radian) {
+			return radian / Math.PI * 180;
+		}
+
+		// 角度转化为弧度
+		var toRadian = function(angle) {
+			return angle / 180 * Math.PI;
+		}
+
+
+		var width = 100,		// 宽度
+			height = 100;		// 高度
+
+		var rotateAngle = 0,	// 旋转的角度
+			step = 5;			// 每次旋转的角度
+
+		// 使用 save和restore 来绘制
+
+		setInterval(function() {
+			// 保存状态（任何操作都没有处理的状态）
+			ctx.save();
+			// 清除画布
+			// ctx.clearRect(-100, -100, cv.width, cv.height);
+			ctx.clearRect(0, 0, cv.width, cv.height);
+
+			// 平移画布
+			ctx.translate(cv.width / 2, cv.height / 2);
+
+			// 每次旋转一个固定的角度
+			ctx.rotate( toRadian(rotateAngle += step) );
+
+			ctx.strokeRect(-width / 2, -height / 2, width, height);
+
+			// 将当前的状态恢复到 任何操作都没有处理的状态
+			ctx.restore();
+		}, 100);
+	</script>
+</body>
+</html>
